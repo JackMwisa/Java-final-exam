@@ -1,45 +1,59 @@
-/**
- * You are tasked with designing a vehicle rental system. 
- * The system has to manage different types of vehicles (cars, trucks and motorcycles). 
- * It also needs to save information about customers who rent these vehicles.
- * 
- */
 
+import java.util.HashMap;
+import java.util.Map;
 
+class Vehicle {
+    private Map<String, Car> cars;
 
-public class Vehicle {
-
-    // fields in my vehicle class, licencePlate, Colour pricePerDay,
-    private String licencePlate;
-    private String colour;
-    private int pricePerDay;
-    private String status; 
-    
-
-    // my constructor
-    public Vehicle(String licencePlate, String colour, int pricePerDay){
-        this.licencePlate = licencePlate;
-        this.colour = colour;
-        this.pricePerDay = pricePerDay;
+    public Vehicle() {
+        cars = new HashMap<>();
+        loadItems();
     }
 
-    //getters and setters
-
-    public String getLicencePlate(){
-        return licencePlate;
+    private void loadItems() {
+        cars.put("1", new RangeRover("RED", "FGU7CXDSUG"));
+        cars.put("2", new RangeRover("YELLOW", "FGU7CXDSUG"));
+        cars.put("3", new Ferrarri("BLACK", "FGU7CXDSUG"));
+        cars.put("4", new Ferrarri("ORANGE", "FGU7CXDSUG"));
     }
 
-    public String getColour(){
-        return colour;
+    public void displayAvailableItems(String itemType) {
+        System.out.println("Available Cars:");
+        Car item = null;
+        for (String key : cars.keySet()) {
+            item = cars.get(key);
+            if (!item.isRented() && item.getColour().equalsIgnoreCase(itemType)) {
+                System.out.println(item + "(Id: " + key + ")");
+            }
+        }
     }
 
+    public void rentItem(String id) {
+        Car car = cars.get(id);
+        if (car != null) {
+            if (!car.isRented()) {
+                car.rent();
+                System.out.println("You have rented: " + car.getLicencePlate());
+            } else {
+                System.out.println("Sorry, this item is already rented.");
+            }
+        } else {
+            System.out.println("Item not found.");
+        }
+    }
 
-
-    
-    
-//get a list of all rentals for a specific vehicle
-
-
-
-
+    public void returnItem(String id) {
+        Car car = cars.get(id);
+        if (car != null) {
+            if (car.isRented()) {
+                car.returnItem();
+                System.out.println("You have returned: " + car.getLicencePlate());
+            } else {
+                System.out.println("This item was not rented.");
+            }
+        } else {
+            System.out.println("Item not found.");
+        }
+    }
 }
+
