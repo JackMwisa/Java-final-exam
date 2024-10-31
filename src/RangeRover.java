@@ -1,3 +1,5 @@
+// an instance of of car
+
 class RangeRover extends Car {
     public RangeRover(String colour, String licencePlate) {
         super(colour, licencePlate);

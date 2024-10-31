@@ -1,3 +1,5 @@
+// an instance of of car
+
 public class Ferrarri extends Car {
         public Ferrarri(String colour, String licencePlate) {
             super(colour, licencePlate);
