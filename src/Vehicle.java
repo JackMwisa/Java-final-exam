@@ -1,12 +1,13 @@
-
 import java.util.HashMap;
 import java.util.Map;
 
 class Vehicle {
     private Map<String, Car> cars;
+    private Map<String, Customer> users; // Map to store users
 
     public Vehicle() {
         cars = new HashMap<>();
+        users = new HashMap<>();
         loadItems();
     }
 
@@ -15,6 +16,26 @@ class Vehicle {
         cars.put("2", new RangeRover("YELLOW", "FGU7CXDSUG"));
         cars.put("3", new Ferrarri("BLACK", "FGU7CXDSUG"));
         cars.put("4", new Ferrarri("ORANGE", "FGU7CXDSUG"));
+    }
+
+    public void createAccount(String username, String password) {
+        if (users.containsKey(username)) {
+            System.out.println("Account already exists.");
+        } else {
+            users.put(username, new Customer(username, password));
+            System.out.println("Account created successfully.");
+        }
+    }
+
+    public boolean login(String username, String password) {
+        Customer user = users.get(username);
+        if (user != null && user.getPassword().equals(password)) {
+            System.out.println("Login successful.");
+            return true;
+        } else {
+            System.out.println("Invalid username or password.");
+            return false;
+        }
     }
 
     public void displayAvailableItems(String itemType) {
